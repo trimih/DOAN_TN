@@ -1,0 +1,210 @@
+POST http://localhost:3000/danhmuc
+Content-Type: application/json
+
+{
+    "name": "hamburger",
+    "description": "burger"
+}
+###
+GET http://localhost:3000/danhmuc
+Content-Type: application/json
+
+###
+PUT http://localhost:3000/danhmuc/663b2024608b0d8d5fc9d2ea
+Content-Type: application/json
+
+{
+    "name": "xe hơi"
+}
+###
+DELETE http://localhost:3000/danhmuc/663b2024608b0d8d5fc9d2ea
+Content-Type: application/json
+
+
+###
+POST http://localhost:3000/add
+Content-Type: application/json
+
+{
+    "name": "khoai tây size vừa",
+    "price": 0,
+    "image": "sp4.png",
+    "description":"ngon",
+    "quantity": 3,
+    "id_danhmuc": "6715fe9f46b3e9a1b5ad70ef"
+    
+}
+###
+GET http://localhost:3000/sanpham
+Content-Type: application/json
+
+###
+POST http://localhost:3000/sanpham/671fbdcc941d2da195b0e0c2/views
+Content-Type: application/json
+
+###
+GET http://localhost:3000/sanpham/hot
+Content-Type: application/json
+###
+PUT http://localhost:3000/sanpham/6645df03f7367e76836983f1
+Content-Type: application/json
+
+{
+    "name": "labtopp gaming 33",
+    "price": 2000000
+}
+###
+DELETE http://localhost:3000/sanpham/664af69cefe688581586714a
+Content-Type: application/json
+###
+GET http://localhost:3000/sanpham/6645df03f7367e76836983f1
+###
+GET http://localhost:3000/sanpham/danhmuc/671fc355941d2da195b0e0eb
+###
+GET http://localhost:3000/user
+Content-Type: application/json
+###
+POST http://localhost:3000/user/signup
+Content-Type: application/json
+
+{
+    "username": "admin",
+    "email": "admin@gmail.com",
+    "password": "123",
+    "phone": "0911918807",
+    "address": "tp HCM"
+}
+###
+PUT http://localhost:3000/user/6655f9d42dd3a23f82e71a02
+Content-Type: application/json
+
+{
+    "fullname": "minh",
+    "password": "123",
+    "role":"user"
+}
+###
+POST http://localhost:3000/user/login
+Content-Type: application/json
+
+{
+   "email":"trihmps33074@fpt.edu.vn",
+   "password":"123" 
+}
+###
+GET  http://localhost:3000/user/671c5cdf874d58f7329efc00
+Content-Type: application/json
+
+###
+GET http://localhost:3000/sanpham/danhmuc/663b200a608b0d8d5fc9d2e8
+Content-Type: application/json
+###
+POST http://localhost:3000/send-mail
+Content-Type: application/json
+###
+GET http://localhost:3000//check-session
+Content-Type: application/json
+###
+GET http://localhost:3000//productdetail/6645df03f7367e76836983f1
+Content-Type: application/json
+###
+POST http://localhost:3000/cart/add 
+Content-Type: application/json
+
+{
+    "productId":"6721096cec9f8c3e516fdb91",
+    "userId":"671c5cdf874d58f7329efc00",
+    "quantity": 2
+}
+###
+GET http://localhost:3000/cart
+Content-Type: application/json
+###
+DELETE http://localhost:3000/cart/671c5cdf874d58f7329efc00/remove
+Content-Type: application/json
+
+{
+    "productId": "671fbdcc941d2da195b0e0c2"
+}
+
+//oder
+###
+GET http://localhost:3000/orders
+Content-Type: application/json
+
+###
+GET http://localhost:3000/orders/6725b15c299e3ccfa6d9a93c
+Content-Type: application/json
+
+
+###
+POST http://localhost:3000/orders/add
+Content-Type: application/json 
+
+{
+    "userId": "6721e2c8cd10ff62519a0f65",
+    "paymentMethod": "tiền mặt",
+    "address": "TP HCM",
+    "totalAmount": 100
+}
+### Yêu cầu xóa giỏ hàng cho người dùng có userId là 123
+DELETE http://localhost:3000/cart/671c5cdf874d58f7329efc00/clear
+Content-Type: application/json
+
+### Create Order Detail
+POST http://localhost:3000/orderdetail/add
+Content-Type: application/json
+
+{
+  "orderId": "672735ccc1ae1d9c3cae18e9",
+  "items": [
+    {
+      "productId": "671fbdcc941d2da195b0e0c2",
+      "quantity": 2,
+      "price": 500000
+    },
+    {
+      "productId": "671fbe2c941d2da195b0e0c9",
+      "quantity": 1,
+      "price": 300000
+    }
+  ]
+}
+
+### Get Order Details
+GET http://localhost:3000/orderdetail
+
+### Get Order Detail by ID
+GET http://localhost:3000/orderdetail/672b1801d78adf2c1e571888 
+
+### Update Order Detail
+PUT http://localhost:3000/orderdetail/672b1801d78adf2c1e571888  
+Content-Type: application/json
+
+{
+  "items": [
+    {
+      "productId": "614c1e05f4b1b8c1d2b2c79a",  // Thay bằng productId thực tế của sản phẩm
+      "quantity": 3,
+      "price": 450000
+    },
+    {
+      "productId": "614c1e05f4b1b8c1d2b2c79b",  // Thay bằng productId thực tế của sản phẩm
+      "quantity": 1,
+      "price": 350000
+    }
+  ]
+}
+
+### Delete Order Detail
+DELETE http://localhost:3000/orderdetail/614c1e05f4b1b8c1d2b2c780  // Thay bằng ID thực tế của OrderDetail
+###
+PUT http://localhost:3000/orders/updateStatus/672b1801d78adf2c1e571888
+Content-Type: application/json
+
+{
+  "status": "Đã hủy"
+}
+###
+GET http://localhost:3000/news/hot
+Content-Type: application/json
