@@ -11,6 +11,7 @@ export default function CartPage() {
     const [address, setAddress] = useState(""); // State cho địa chỉ
     const [paymentMethod, setPaymentMethod] = useState("tiền mặt"); // State cho phương thức thanh toán
     const [paymentMethods] = useState(["tiền mặt", "thẻ tín dụng"]); // Các phương thức thanh toán
+    const [message, setMessage] = useState(''); // Thêm state cho thông báo
 
     useEffect(() => {
         const getUserIdFromToken = () => {
@@ -31,7 +32,11 @@ export default function CartPage() {
 
     useEffect(() => {
         const fetchCart = async () => {
-            if (!userId) return;
+            if (!userId) {
+                setLoading(false);//không cần tải giỏ hàng khi chưa có userId
+                return;
+            }
+               
             try {
                 const response = await fetch(`http://localhost:3000/cart/${userId}`);
                 if (!response.ok) {
@@ -53,7 +58,10 @@ export default function CartPage() {
     if (error) return <div>{error}</div>;
 
     if (!cart || !cart.items) {
-        return <div>Không có giỏ hàng nào.</div>;
+        return <div>
+                <p>Vui lòng đăng nhập để xem giỏ hàng.</p>
+                <Link href="/dangnhap">Đăng nhập</Link>
+                </div>;
     }
 
     const handleQuantityChange = async (productId, quantity) => {
@@ -242,14 +250,31 @@ export default function CartPage() {
             // // Thêm sản phẩm vào OrderDetail
             await addOrderDetail(orderId);
     
-            
+              // Lưu thông tin đơn hàng vào localStorage
+                const orderData = {
+                orderId: orderId,
+                userId: userId,
+                totalAmount: cart.totalPrice,
+                paymentMethod: paymentMethod,
+                address: address,
+                items: cart.items.map(item => ({
+                productId: item.productId._id,
+                name: item.productId.name,
+                quantity: item.quantity,
+                price: item.productId.price,
+                    })),
+                };
+                localStorage.setItem('lastOrder', JSON.stringify(orderData));
     
             // Gửi email thông báo đơn hàng
             await sendOrderEmail(orderId);
     
             // Xóa giỏ hàng sau khi thanh toán thành công
             await handleClearCart();
-            alert('Đặt hàng thành công!'); // Thông báo thành công
+            setMessage('Đặt hàng thành công!'); // Thông báo thành công
+            setTimeout(() => {
+                setMessage(''); // Ẩn thông báo sau 3 giây
+              }, 3000);
         } catch (error) {
             console.error('Lỗi trong quá trình thanh toán:', error.message);
         }
@@ -261,7 +286,7 @@ export default function CartPage() {
             {cart.items.length === 0 ? (
                 <div>
                     <p>Giỏ hàng của bạn đang trống.</p>
-                    <Link href="/">Tiếp tục mua sắm</Link>
+                    <Link href="/sanpham">Tiếp tục mua sắm</Link>
                 </div>
             ) : (
                 <div className="cartWrapper">
@@ -317,8 +342,8 @@ export default function CartPage() {
                                             {(item.productId.price * item.quantity) ? (item.productId.price * item.quantity).toLocaleString('vi-VN') : '0'} VNĐ
                                         </td>
                                         <td>
-                                            <button className="btn btn-danger" onClick={() => handleRemove(item.productId._id)}>
-                                                Xóa
+                                            <button className="btn btn-danger" style={{backgroundColor:'white',color:'black',border:'none'}} onClick={() => handleRemove(item.productId._id)}>
+                                            <i class="bi bi-trash3"></i>
                                             </button>
                                         </td>
                                     </tr>
@@ -350,12 +375,18 @@ export default function CartPage() {
                         <div className="totalSection">
                         <strong><span style={{ fontWeight: 'bold', color: 'black',marginRight: '80px' }}>Tổng tiền:</span> {cart.totalPrice.toLocaleString('vi-VN')} VNĐ</strong>
                         </div>
-                        <button className="btn btn-primary" onClick={handleCheckout}>
+                        <button className="btn btn-primary" style={{backgroundColor: '#fba823'}} onClick={handleCheckout}>
                             Thanh toán
                         </button>
                     </div>
                 </div>
             )}
+             {/* Hiển thị thông báo ở góc dưới màn hình */}
+        {message && (
+          <div className="toast-message">
+            {message}
+          </div>
+        )}
         </div>
     );
 }

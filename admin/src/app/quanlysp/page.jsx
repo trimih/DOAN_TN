@@ -100,8 +100,8 @@ export default function Page() {
                   <td>{sp.price.toLocaleString('vi-VN')} VNĐ</td>
                   <td>{sp.description}</td>
                   <td>{sp.views}</td>
-                  <td><Link className="btn btn-primary mx-2" href={`/quanlysp/sua/${sp._id}`}>Sửa</Link></td>
-                  <td><button className="delButton" onClick={() => deleteProduct(sp._id)}>Del</button></td>
+                  <td><Link className="btn btn-primary mx-2" href={`/quanlysp/sua/${sp._id}`}><i class="bi bi-pencil-square"></i></Link></td>
+                  <td><button className="delButton" onClick={() => deleteProduct(sp._id)}> <i class="bi bi-trash3"></i></button></td>
                 </tr>
               ))}
             </tbody>

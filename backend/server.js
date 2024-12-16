@@ -12,6 +12,7 @@ const cartRouter = require('./router/cartRouter');
 const mailRouter = require('./router/mail');
 const orderRouter = require('./router/oderRouter');
 const orderDetailRouter = require('./router/oderdetailRouter');
+const commentRouter = require('./router/commentRouter');
 const app = express();
 const port = 3000;
 const url = "mongodb://localhost:27017/duanTN";
@@ -46,6 +47,7 @@ app.use(cartRouter);
 app.use(orderRouter);
 app.use(mailRouter);
 app.use(orderDetailRouter);
+app.use(commentRouter);
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)

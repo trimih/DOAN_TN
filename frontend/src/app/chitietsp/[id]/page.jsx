@@ -8,11 +8,18 @@ const fetcher = (url) => fetch(url).then((res) => res.json());
 export default function DetailPage({ params }) {
     const [quantity, setQuantity] = useState(1);
     const [userID, setUserID] = useState(null);
+    const [message, setMessage] = useState(''); // Thêm state cho thông báo
 
     const { data: product, error, isLoading } = useSWR(`http://localhost:3000/sanpham/${params.id}`, fetcher, {
         refreshInterval: 6000,
     });
-
+    
+    const { data: comments, error: commentsError, isLoading: commentsLoading } = useSWR(
+        product ? `http://localhost:3000/comments/product/${product._id}` : null,
+        fetcher,
+        { refreshInterval: 6000 }
+    );
+    
     const { data: relatedProducts } = useSWR(
         product ? `http://localhost:3000/sanpham/danhmuc/${product.id_danhmuc}` : null,
         fetcher
@@ -58,10 +65,14 @@ export default function DetailPage({ params }) {
 
     const handleAddToCart = async () => {
         if (!userID) {
-            alert("Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng.");
-            return;
+            // Hiển thị thông báo yêu cầu đăng nhập
+            setMessage("Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng!");
+            setTimeout(() => {
+                setMessage(''); // Ẩn thông báo sau 3 giây
+            }, 3000);
+            return; // Dừng hàm tại đây, không thêm sản phẩm vào giỏ hàng
         }
-
+    
         try {
             const response = await fetch("http://localhost:3000/cart/add", {
                 method: "POST",
@@ -74,9 +85,12 @@ export default function DetailPage({ params }) {
                     quantity: Number(quantity)
                 })
             });
-
+    
             if (response.ok) {
-                alert("Sản phẩm đã được thêm vào giỏ hàng!");
+                setMessage("Sản phẩm đã được thêm vào giỏ hàng!");
+                setTimeout(() => {
+                    setMessage(''); // Ẩn thông báo sau 3 giây
+                }, 3000);
             } else {
                 alert("Không thể thêm sản phẩm vào giỏ hàng. Vui lòng thử lại.");
             }
@@ -128,6 +142,79 @@ export default function DetailPage({ params }) {
                     </div>
                 </div>
             </div>
+            <div className="comments-section">
+    <h3>BÌNH LUẬN SẢN PHẨM</h3>
+    {/* Hiển thị danh sách bình luận */}
+    {commentsLoading ? (
+        <p>Đang tải bình luận...</p>
+    ) : commentsError ? (
+        <p>Không thể tải bình luận. Vui lòng thử lại sau.</p>
+    ) : comments && comments.length > 0 ? (
+        <ul className="comments-list">
+            {comments.map((comment) => (
+                <li key={comment._id}>
+                    <strong><img src="/image/user.jpg" width={'7%'} style={{borderRadius:'50px',padding:'0 12px '}} alt="" />{comment.userId.username}</strong>
+                    <p>{comment.description}</p>
+                    <small>{new Date(comment.createdAt).toLocaleString()}</small>
+                </li>
+            ))}
+        </ul>
+    ) : (
+        <p>Chưa có bình luận nào.</p>
+    )}
+     {/* Form thêm bình luận */}
+     <form
+        className="comment-form"
+        onSubmit={async (e) => {
+            e.preventDefault();
+            const commentContent = e.target.comment.value;
+
+            if (!userID) {
+                setMessage("Vui lòng đăng nhập để bình luận!");
+                setTimeout(() => {
+                    setMessage(''); // Ẩn thông báo sau 3 giây
+                  }, 3000);
+                return;
+            }
+
+            try {
+                const response = await fetch(`http://localhost:3000/comments/add`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        productId: product._id,
+                        userId: userID,
+                        description: commentContent,
+                    }),
+                });
+
+                if (response.ok) {
+                    e.target.comment.value = "";
+                   
+                } else {
+                    alert("Không thể thêm bình luận. Vui lòng thử lại.");
+                    
+                }
+            } catch (error) {
+                console.error("Error adding comment:", error);
+                alert("Đã xảy ra lỗi khi thêm bình luận.");
+            }
+        }}
+    >
+        <textarea
+            name="comment"
+            className="form-control"
+            placeholder="Nhập bình luận của bạn..."
+            required
+        ></textarea>
+        <button type="submit" className="btn btn-primary my-2">
+            Gửi bình luận
+        </button>
+    </form>
+</div>
+
 
             {/* Phần Sản Phẩm Tương Tự */}
             <h3>Những Sản Phẩm Tương Tự</h3>
@@ -149,6 +236,12 @@ export default function DetailPage({ params }) {
                     </div>
                 </div>
             </section>
+             {/* Hiển thị thông báo ở góc dưới màn hình */}
+        {message && (
+          <div className="toast-message">
+            {message}
+          </div>
+        )}
         </>
     );
 }

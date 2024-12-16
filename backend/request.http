@@ -208,3 +208,22 @@ Content-Type: application/json
 ###
 GET http://localhost:3000/news/hot
 Content-Type: application/json
+
+###
+PUT http://localhost:3000/new/672f68336ccbe9b9cc743afe
+### tạo bình luận
+POST http://localhost:3000/comments/add
+Content-Type: application/json
+
+{
+  "userId": "6721e2c8cd10ff62519a0f65",
+  "productId": "671fbdcc941d2da195b0e0c2",
+  "description": "Sản phẩm này rất tốt!"
+}
+### lấy bình luận theo productid
+GET http://localhost:3000/comments/product/671fbdcc941d2da195b0e0c2
+Content-Type: application/json
+### xóa bình luận
+DELETE  http://localhost:3000/comments/673ded499d752a0dee5df2c0
+###
+GET  http://localhost:3000/comments

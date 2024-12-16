@@ -69,7 +69,7 @@ export default function News({ newsData }) {
       </section>
       {/* Latest News */}
       <section className="latest-news mb-5">
-        <h2 className="section-title">Tin Mới</h2>
+        <h2 className="section-title">Tin Hot</h2>
         <div className="row">
           {hottt.slice(0,4).map((news, index) => (
             <div key={index} className="col-md-3 mb-4">

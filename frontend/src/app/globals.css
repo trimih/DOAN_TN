@@ -26,6 +26,8 @@ header .top-bar .contact-info .info{
 header .top-bar .user-auth span {
   color: white;
   margin-right: 10px;
+  font-family: 'Open Sans', sans-serif; /* Hoặc font hỗ trợ tiếng Việt */
+font-variant: normal;
 }
 
 
@@ -141,6 +143,7 @@ header .main-header .cart-icon a {
   font-weight: bold; /* Làm đậm tên người dùng */
   color: #333; /* Màu chữ cho tên người dùng */
    text-transform: uppercase; /* Chữ in hoa */
+   padding: 0;
 }
 /* //cart header */
 .cart-icon {
@@ -579,6 +582,7 @@ h2 {
   align-items: center;
   gap: 10px;
   margin-top: 20px;
+  
 }
 
 .product-container .quantity-btn {
@@ -603,7 +607,7 @@ h2 {
 }
 
 .product-container .quantity-input {
-  width: 50px;
+  width: 60px;
   text-align: center;
   font-size: 16px;
   border: 1px solid #ddd;
@@ -1079,4 +1083,136 @@ p {
 }
 .latest-news .news-item .tl{
   height: 30px;
+}
+/* chi tiết tin tức */
+
+.content{
+  margin: 0 100px ;
+}
+.content h2{
+  font-size: 30px;
+  font-weight: bold;
+}
+.content p{
+  font-size: larger;
+  margin: 30px 0;
+}
+.content img{
+  margin-left: 400px;
+}
+/* bình luận */
+/* Tổng thể khung bình luận */
+.comments-section {
+  width: 50%;
+  margin-top: 50px;
+  margin-left: 50px; 
+  margin-bottom: 50px;
+  padding: 20px;
+  background-color: #ffffff; /* Màu nền nhẹ */
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Tiêu đề phần bình luận */
+.comments-section h3 {
+  font-size: 26px;
+  font-weight: bold;
+  color: #333; /* Màu chữ đậm */
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+/* Danh sách bình luận */
+.comments-list {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.comments-list li {
+  margin-bottom: 10px;
+  padding: 15px;
+  background-color: #ffffff; /* Màu nền của từng bình luận */
+}
+
+/* Tên người dùng */
+.comments-list li strong {
+  font-weight: bold;
+  font-size: 15px;
+  color: #0d0d0d; /* Màu xanh nổi bật */
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* Nội dung bình luận */
+.comments-list li p {
+  font-size: 14px;
+  color: #403f3f;
+  margin-left: 55px;
+  margin-top: 5px;
+}
+
+/* Thời gian bình luận */
+.comments-list li small {
+  display: block;
+  font-size: 12px;
+  color: #999;
+  text-align: right;
+}
+
+/* Form thêm bình luận */
+.comment-form {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #ddd;
+}
+
+.comment-form textarea {
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 10px;
+  resize: none;
+  height: 100px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.comment-form textarea:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Nút gửi bình luận */
+.comment-form button {
+  width: 20%;
+  background-color: #f4bb0f;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.comment-form button:hover {
+  background-color: #0056b3;
+}
+/* thông báo */
+.toast-message {
+  position: fixed;
+  top: 20px; /* Cách đáy màn hình 20px */
+  left: 50%;
+  transform: translateX(-50%); /* Giữa màn hình */
+  background-color: #28a745; /* Màu nền xanh */
+  color: white; /* Màu chữ trắng */
+  padding: 10px 20px; /* Padding cho thông báo */
+  border-radius: 5px; /* Bo tròn góc */
+  z-index: 1000; /* Đặt z-index để thông báo nằm trên các phần tử khác */
+  transition: opacity 0.5s ease; /* Hiệu ứng mờ dần */
 }

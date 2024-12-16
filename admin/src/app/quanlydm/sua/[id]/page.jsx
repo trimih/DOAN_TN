@@ -50,7 +50,7 @@ export default function EditProduct({ params }) {
 
   return (
     <div className="centered-form-container-dm">
-      <h2>Chỉnh sửa sản phẩm</h2>
+      <h2>Chỉnh sửa danh mục</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="form-group my-2">
           <label className='form-label'>Tên danh mục</label>
@@ -63,7 +63,7 @@ export default function EditProduct({ params }) {
           {errors.description && <div className="text-danger">{errors.description.message}</div>}
         </div>
         
-        <button type="submit" className="btn btn-primary my-3">Cập nhật sản phẩm</button>
+        <button type="submit" className="btn btn-primary my-3">Cập nhật danh mục</button>
       </form>
     </div>
   );

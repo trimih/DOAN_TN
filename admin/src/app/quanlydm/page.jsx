@@ -13,7 +13,8 @@ export default function Page() {
       try {
         const res = await fetch("http://localhost:3000/danhmuc");
         const result = await res.json();
-        setData(result);
+        const sortedData = result.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        setData(sortedData);
         console.log(result);
         setLoading(false);
         setMessage('Tải danh mục thành công!'); // Hiển thị thông báo khi tải dữ liệu thành công
@@ -62,7 +63,7 @@ export default function Page() {
                   <td>{index + 1}</td>
                   <td>{sp.name}</td>
                   <td>{sp.description}</td>
-                  <td><Link  className="btn btn-primary mx-2" href={`/quanlydm/sua/${sp._id}`}>Sửa</Link></td>
+                  <td><Link  className="btn btn-primary mx-2" href={`/quanlydm/sua/${sp._id}`}><i class="bi bi-pencil-square"></i></Link></td>
                 </tr>
               ))}
             </tbody>

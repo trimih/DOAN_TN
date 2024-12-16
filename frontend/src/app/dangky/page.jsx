@@ -4,9 +4,11 @@ import { useFormik } from 'formik';
 import { useRouter } from 'next/navigation';
 import * as Yup from 'yup';
 import Link from 'next/link';
+import { useEffect, useState } from "react";
 
 // Trang đăng ký
 export default function Register() {
+    const [message, setMessage] = useState(''); // Thêm state cho thông báo
     const router = useRouter();
     const formik = useFormik({
         initialValues: {
@@ -55,7 +57,10 @@ export default function Register() {
                     }
                 }
                 // Xử lý thành công
-                alert('Đăng ký thành công');
+                setMessage('Đăng ký thành công');
+                setTimeout(() => {
+                    setMessage(''); // Ẩn thông báo sau 3 giây
+                  }, 3000);
                 router.push('/');
             } catch (error) {
                 setFieldError('general', error.message);
@@ -144,6 +149,12 @@ export default function Register() {
                     <p className="my-3 text-danger">{formik.errors.general}</p>
                 )}
             </form>
+             {/* Hiển thị thông báo ở góc dưới màn hình */}
+        {message && (
+          <div className="toast-message">
+            {message}
+          </div>
+        )}
         </div>
     );
 }

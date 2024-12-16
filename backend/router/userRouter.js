@@ -98,8 +98,8 @@ app.delete('/user/:id', async (req, res) => {
 //sửa user
 app.put('/user/:id', async (req, res) => {
     const id = req.params.id;
-    const {fullname, email, password, phone, address,role} = req.body;
-    const u = await userModel.findByIdAndUpdate(id, {fullname, email, password, phone, address,role}, {new: true});
+    const {username, email, password, phone, address,role} = req.body;
+    const u = await userModel.findByIdAndUpdate(id, {username, email, password, phone, address,role}, {new: true});
     if(!u) return res.status(404).send('User not found');
     res.send(u);
 })

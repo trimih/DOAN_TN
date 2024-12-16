@@ -30,6 +30,10 @@ export default function Home() {
       <div className="content">
         <h1 style={{marginBottom:'15px'}}>Thống Kê</h1>
         <div className="stats">
+        <div className="card">
+            <h3>Doanh Thu</h3>
+            <p>{totalRevenue.toLocaleString('vi-VN')} VNĐ</p>
+          </div>
           <div className="card">
             <h3>Số Lượng</h3>
             <p>{totalquality}</p>
@@ -41,10 +45,6 @@ export default function Home() {
           <div className="card">
             <h3>Đơn Hàng</h3>
             <p>{totalOrders}</p>
-          </div>
-          <div className="card">
-            <h3>Doanh Thu</h3>
-            <p>{totalRevenue.toLocaleString('vi-VN')} VNĐ</p>
           </div>
           <div className="card">
             <h3>Tài Khoản</h3>

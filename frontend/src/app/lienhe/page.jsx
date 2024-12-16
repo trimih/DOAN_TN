@@ -20,7 +20,7 @@ export default function Lienhe() {
                   </li>
                   <li>
                   <i className="bi bi-stopwatch"></i>
-                      <strong>Giờ Làm Việc:</strong> Thứ Hai - Thứ Sáu: 9:00-20:00 <br/> Thứ Bảy: 11:00 - 15:00
+                      <strong>Giờ Hoạt Động:</strong> Thứ Hai - Thứ Sáu: 9:00-20:00 <br/> Thứ Bảy: 11:00 - 15:00
                   </li>
               </ul>
           </div>

@@ -3,8 +3,10 @@ import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import Link from 'next/link';
+import { useEffect, useState } from "react";
 
 export default function Login() {
+    const [message, setMessage] = useState(''); // Thêm state cho thông báo
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -25,10 +27,20 @@ export default function Login() {
                 });
             
                 if (!res.ok) {
-                    const errorData = await res.json();
-                    throw new Error(errorData.message || 'Đăng nhập thất bại');
-                }
-            
+                  const errorData = await res.json();
+                  const errorMessage = errorData.message || 'Email hoặc Password không chính xác';
+                  
+                  // Hiển thị thông báo lỗi
+                  setMessage(errorMessage);
+                  setTimeout(() => {
+                      setMessage(''); // Ẩn thông báo sau 3 giây
+                  }, 3000);
+              
+                  // Ném lỗi để xử lý tiếp theo (nếu cần)
+                  throw new Error(errorMessage);
+              }
+              
+                
                 // Lưu token vào localStorage
                 const data = await res.json();
                 localStorage.setItem('token', data.token);
@@ -43,6 +55,10 @@ export default function Login() {
                     window.location.href = 'http://localhost:3002';
                 } else {
                     console.log("Vai trò: User, chuyển hướng đến trang chủ");
+                    setMessage('Đăng nhập thành công!');
+                    setTimeout(() => {
+                        setMessage(''); // Ẩn thông báo sau 3 giây
+                      }, 3000);
                     window.location.href = '/';
                 }
             } catch (error) {
@@ -99,6 +115,12 @@ export default function Login() {
   </div>
 </div>
 </div>
+ {/* Hiển thị thông báo ở góc dưới màn hình */}
+ {message && (
+          <div className="toast-message">
+            {message}
+          </div>
+        )}
 </>
     );
 }

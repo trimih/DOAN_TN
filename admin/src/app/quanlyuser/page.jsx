@@ -13,8 +13,9 @@ export default function Page() {
       try {
         const res = await fetch("http://localhost:3000/user");
         const result = await res.json();
-        setData(result);
-        console.log(result);
+        const sortedData = result.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        setData(sortedData);
+        console.log(sortedData);
         setMessage('Tải người dùng thành công!');
         setTimeout(() => {
           setMessage(''); // Ẩn thông báo sau 3 giây
@@ -94,8 +95,8 @@ export default function Page() {
                   <td>{us.email}</td>
                   <td>{us.role}</td>
                   <td>
-                    <Link className="btn btn-primary mx-2" href={`/quanlyuser/sua/${us._id}`}>Sửa</Link>
-                    <button className="delButton" onClick={() => deleteUser(us._id)}>Del</button>
+                    <Link className="btn btn-primary mx-2" href={`/quanlyuser/sua/${us._id}`}><i class="bi bi-pencil-square"></i></Link>
+                    <button className="delButton" onClick={() => deleteUser(us._id)}> <i className="bi bi-trash3"></i></button>
                     </td>
                 </tr>
               ))}

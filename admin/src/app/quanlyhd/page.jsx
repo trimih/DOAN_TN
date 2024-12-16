@@ -14,7 +14,8 @@ export default function Page() {
       try {
         const res = await fetch("http://localhost:3000/orders");
         const result = await res.json();
-        setData(result);
+        const shortData =result.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
+        setData(shortData);
         setLoading(false);
         setMessage('Tải danh mục thành công!'); // Hiển thị thông báo khi tải dữ liệu thành công
         setTimeout(() => {
@@ -92,7 +93,8 @@ export default function Page() {
                 <th>Trạng Thái</th>
                 <th>Tổng Tiền</th>
                 <th>Phương Thức TT</th>
-                <th>Edit</th>
+                <th>Thời gian</th>
+                <th>Chức năng</th>
                 <th>Xác nhận</th>
               </tr>
             </thead>
@@ -103,10 +105,18 @@ export default function Page() {
                   <td>{hd.userId.username}</td>
                   <td>{hd.userId.address}</td>
                   <td>{hd.status}</td>
-                  <td>{hd.totalAmount}</td>
+                  <td>{hd.totalAmount.toLocaleString('vi-VN')} VNĐ</td>
                   <td>{hd.paymentMethod}</td>
+                  <td>{new Date(hd.createdAt).toLocaleString('vi-VN', { 
+                        year: 'numeric', 
+                        month: 'long', 
+                        day: 'numeric', 
+                        hour: '2-digit', 
+                        minute: '2-digit', 
+                        second: '2-digit' 
+                    })}
+                    </td>
                   <td>
-                    <Link  className="btn btn-primary mx-2" href={`/quanlyhd/sua/${hd._id}`}>Sửa</Link>
                     <Link  className="btn btn-primary mx-2" href={`/quanlyhd/hoadonct/${hd._id}`}>Xem chi tiết</Link>
                   </td>
                   <td>
